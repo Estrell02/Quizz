@@ -38,7 +38,7 @@ public class SecurityConfig {
                 // Configuration des règles d'autorisation
                 .authorizeHttpRequests(authz ->
                         authz
-                                .requestMatchers("/public/**").permitAll() // Permet l'accès aux routes publiques
+                                .requestMatchers("/auth/**").permitAll() // Permet l'accès aux routes publiques
                                 .anyRequest().authenticated()  // Toutes les autres routes nécessitent une authentification
                 );
 

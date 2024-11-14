@@ -1,10 +1,13 @@
 package epf.min.quiz_platform.Controllers;
 
+import epf.min.quiz_platform.DTO.UserDTO;
 import epf.min.quiz_platform.models.User;
 import epf.min.quiz_platform.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
@@ -27,5 +30,10 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody User user) {
         userService.registerUser(user);
         return ResponseEntity.ok("User registered successfully");
+    }
+    @GetMapping("/users")
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 }
