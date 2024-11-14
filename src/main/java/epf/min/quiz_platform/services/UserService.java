@@ -1,7 +1,9 @@
 package epf.min.quiz_platform.services;
 
+import epf.min.quiz_platform.DAO.CategoryScoreDAO;
 import epf.min.quiz_platform.DAO.UserDAO;
 import epf.min.quiz_platform.DTO.UserDTO;
+import epf.min.quiz_platform.models.CategoryScore;
 import epf.min.quiz_platform.models.User;
 import epf.min.quiz_platform.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class UserService {
 
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private CategoryScoreDAO categoryScoreDAO;
 
     @Autowired
     private JWTUtil jwtUtil;
@@ -60,4 +64,25 @@ public class UserService {
         }
         return userDTOs;
     }
+    public void updateScoreForCategory(String username, String category, int score) {
+        User user = userDAO.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+
+        CategoryScore categoryScore = categoryScoreDAO.findByUserAndCategory(user, category)
+                .orElse(new CategoryScore());
+
+        categoryScore.setUser(user);
+        categoryScore.setCategory(category);
+        categoryScore.setScore(score);
+
+        categoryScoreDAO.save(categoryScore);
+    }
+
+    public List<CategoryScore> getCategoryScores(String username) {
+        User user = userDAO.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return categoryScoreDAO.findByUser(user);
+    }
+
+
 }
