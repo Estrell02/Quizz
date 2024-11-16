@@ -13,7 +13,7 @@ RUN mvn package -DskipTests
 FROM amazoncorretto:17
 ENV MYAPP_HOME /opt/myapp
 WORKDIR $MYAPP_HOME
-COPY --from=myapp-build $MYAPP_HOME/target/*.jar $MYAPP_HOME/myapp.jar
+COPY --from=myapp-build $MYAPP_HOME/target/quiz_platform-0.0.1-SNAPSHOT.jar $MYAPP_HOME/myapp.jar
 EXPOSE 8080
 ENTRYPOINT java -jar myapp.jar
 
