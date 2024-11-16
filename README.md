@@ -15,9 +15,12 @@ http://localhost:8080
    docker network create quiz_network
 
 2. Lancez PostgreSQL :
+ ```bash
 docker run --network=quiz_network --name my_postgres -e POSTGRES_PASSWORD=pwd -p 5432:5432 -d postgres
 
+
 3. Construisez et exécutez le backend :
+ ```bash
 
 docker build -t quizzmaster:latest .
 docker run --name quizz_platform -p 8080:8080 --network quiz_network quizzmaster:latest
